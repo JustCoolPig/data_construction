@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>5条 Benchmark 候选金标审计</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到审计内容</a>
+  <div class="shell">
+    <header class="topbar">
+      <button id="navToggle" class="icon-button nav-toggle" type="button" aria-label="打开导航" aria-expanded="false">☰</button>
+      <button id="homeButton" class="brand" type="button" aria-label="返回总览">
+        <span class="brand-mark">G5</span>
+        <span><strong>金标审计</strong><small>Benchmark evidence review</small></span>
+      </button>
+      <label class="global-search">
+        <span>搜索</span>
+        <input id="globalSearch" type="search" placeholder="问题、文件、query 或轨迹内容" autocomplete="off">
+        <kbd>/</kbd>
+      </label>
+      <div id="globalStatus" class="global-status" aria-live="polite"></div>
+    </header>
+
+    <aside id="sidebar" class="sidebar" aria-label="案例与文件导航">
+      <div class="sidebar-scroll">
+        <button class="nav-item nav-overview is-active" data-view="overview" type="button">
+          <span>审计总览</span><small>5 条候选</small>
+        </button>
+        <div id="caseNav"></div>
+      </div>
+      <div class="sidebar-foot">
+        <span class="dot blocker"></span>仍有阻断即不可入库
+      </div>
+    </aside>
+
+    <main id="main" class="main" tabindex="-1">
+      <div class="loading">正在加载完整审计证据…</div>
+    </main>
+  </div>
+
+  <aside id="evidenceDrawer" class="evidence-drawer" aria-label="单元格证据" aria-hidden="true">
+    <div class="drawer-head">
+      <div><small>单元格证据</small><h2 id="drawerTitle">—</h2></div>
+      <button id="drawerClose" class="icon-button" type="button" aria-label="关闭证据">×</button>
+    </div>
+    <div id="drawerBody" class="drawer-body"></div>
+  </aside>
+  <div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+
+  <noscript>此审计页需要 JavaScript 才能展开完整轨迹和 CSV。</noscript>
+  <script src="data/audit-data.js"></script>
+  <script src="assets/app.js" defer></script>
+</body>
+</html>

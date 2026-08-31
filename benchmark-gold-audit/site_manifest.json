@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-08-27T19:58:25.682726+00:00",
+  "qualification": "0/5条可入库",
+  "cases": 5,
+  "csv_files": 44,
+  "data_cells": 313552,
+  "complete_trajectories": 5,
+  "secret_redactions": 0,
+  "browser_qa": "passed",
+  "files": [
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/index.html",
+      "bytes": 2368,
+      "sha256": "c6edf5f9a956056646b502169c2f6482d814edeb3dc893bb09471e7354aab620"
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/assets/styles.css",
+      "bytes": 21324,
+      "sha256": "55c7560638aaf8fcd72ff2b5480912cf0dd112d9e2bfd33a1081b66eb9ce62b4"
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/assets/app.js",
+      "bytes": 33505,
+      "sha256": "1652404b5861a9529a29464c401fef5b76878ccae3a5cc0db8700544e016693a"
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/data/audit-data.js",
+      "bytes": 9074496,
+      "sha256": "d01494fd8f0b11c0164d3c00d066d27ed245e7ae08da83d65035c44fc97fb3ea"
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/README.md",
+      "bytes": 469,
+      "sha256": "d8c66ce19b4f0170a19a8a497830e7ee37ec5d157161c6b95f8f63bf6b04a021"
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/qa/qa_report.json",
+      "bytes": 1771,
+      "sha256": "7aba6eb0577dacd69e1d6e12f846b3d6021b46e6dddd983ae7592eb3387c131f"
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/qa/qa_overview.png",
+      "bytes": 453038,
+      "sha256": "574714482ffa6a44ef83dbf0e69f6a7e110736cb60f7b5743829f23895939901"
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/qa/qa_case5.png",
+      "bytes": 838867,
+      "sha256": "d35e494ea98707ec32a277b4c3c93ba230ebdc1ef1980ce4ba75e1fc5cbb9f86"
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/qa/qa_mobile.png",
+      "bytes": 621235,
+      "sha256": "7187b4c744f578a15db0e588a54378e30ef6725cf733735ad8939b06e4991201"
+    }
+  ]
+}

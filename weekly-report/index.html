@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>周报 · 2026.08.31</title>
+  <style>
+    :root {
+      --bg: #1f2328;
+      --text: #c7d9e8;
+      --heading: #bdd8ec;
+      --muted: #94a9ba;
+      --line: #46515b;
+      --table-head: #2d353d;
+      --link: #4da3ff;
+      --strong: #d8e8f4;
+      --code: #252b31;
+    }
+
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      padding: 18px 28px 72px;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.72 "Microsoft YaHei", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+    }
+
+    article {
+      width: min(1460px, 100%);
+      margin: 0 auto;
+    }
+
+    details { margin: 0; }
+
+    summary {
+      cursor: pointer;
+      color: var(--heading);
+      list-style-position: outside;
+    }
+
+    summary::marker { color: #9db9ce; }
+
+    .report > summary {
+      margin-bottom: 8px;
+      font-size: 24px;
+      line-height: 1.35;
+      font-weight: 500;
+    }
+
+    .report-body { padding-left: 22px; }
+
+    .lead {
+      margin: 8px 0 20px;
+      color: var(--text);
+    }
+
+    .section { margin: 22px 0 0; }
+
+    .section > summary {
+      margin-left: -4px;
+      padding: 3px 0;
+      font-size: 20px;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .section-body { padding: 2px 0 0 18px; }
+    p { margin: 10px 0; }
+
+    strong {
+      color: var(--strong);
+      font-weight: 650;
+    }
+
+    ul, ol {
+      margin: 8px 0 10px;
+      padding-left: 26px;
+    }
+
+    li { margin: 4px 0; }
+
+    code {
+      padding: 1px 5px;
+      border: 1px solid #39424b;
+      border-radius: 3px;
+      background: var(--code);
+      color: #d7e6f2;
+      font-family: "Cascadia Mono", Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    a:focus-visible {
+      outline: 2px solid var(--link);
+      outline-offset: 3px;
+    }
+
+    table {
+      width: min(100%, 1120px);
+      margin: 12px 0 16px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--table-head);
+      color: var(--strong);
+      font-weight: 650;
+    }
+
+    td:first-child {
+      width: 120px;
+      white-space: nowrap;
+    }
+
+    figure {
+      width: min(100%, 1120px);
+      margin: 16px 0 18px;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    figcaption {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .links { margin-top: 10px; }
+    .links a { margin-right: 18px; }
+
+    @media (max-width: 760px) {
+      body { padding: 14px 14px 48px; font-size: 14px; }
+      .report-body { padding-left: 10px; }
+      .section-body { padding-left: 8px; }
+      .report > summary { font-size: 21px; }
+      .section > summary { font-size: 18px; }
+      table { display: block; overflow-x: auto; }
+    }
+
+    @media print {
+      :root {
+        --bg: #fff;
+        --text: #222;
+        --heading: #111;
+        --muted: #666;
+        --line: #aaa;
+        --table-head: #eee;
+        --link: #1558a6;
+        --strong: #111;
+        --code: #f3f3f3;
+      }
+      body { padding: 0; }
+      summary { cursor: default; }
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <details class="report" open>
+      <summary>周报 · 2026.08.31</summary>
+      <div class="report-body">
+        <p class="lead">本周围绕 iFinD 评测集与金标数据建设展开。完成线上 102 条 <code>runnable_command</code> 的轨迹整理，确认取数类任务可以统一使用一个或多个 CSV 作为最终产物；随后对 5 条 benchmark 候选逐条检查 Query、原轨迹、工具结果、CSV 和主键，形成 case1、case2、case4 三组 Query + 金标答案，并梳理当前人工核验链路和后续稳定构建方案。</p>
+
+        <details class="section" open>
+          <summary>一、完成线上 102 条 runnable_command 轨迹分析</summary>
+          <div class="section-body">
+            <p>从线上数据处理链路拉取 102 条主 Agent 派发给取数 Agent 的 <code>runnable_command</code>，整理任务改写、模型执行过程、工具参数与返回、最终 CSV，并制作完整轨迹页面。</p>
+            <p>分析确认：这批任务的最终数据均可表示为一张或多张关系型二维表，后续评测产物可以统一收敛为 CSV。该页面主要用于查看真实执行过程和行为 Pattern，不把自动标签当作逐条结果正确性结论。</p>
+<p class="links"><a href="https://justcoolpig.github.io/ifind-eval-weekly-20260831/runnable-command-102/">打开 102 条 runnable_command 轨迹分析页面</a></p>
+          </div>
+        </details>
+
+        <details class="section" open>
+          <summary>二、确定以 CSV 为核心的评测集建设方式</summary>
+          <div class="section-body">
+            <p>参与讨论并确定当前阶段优先建设评测集。每条样本由<strong>自然语言 Query、一个或多个金标 CSV、每张 CSV 的主键</strong>组成；评测时按主键对齐，不依赖行顺序，再比较行、列和单元格值。</p>
+            <p>这使数据正确性可以交给确定性 verifier 检查，LLM Judge 只处理无法完全结构化的文字说明，不再承担主要数据判分。</p>
+          </div>
+        </details>
+
+        <details class="section" open>
+          <summary>三、完成 5 条 benchmark 候选的验证与清洗</summary>
+          <div class="section-body">
+            <p>逐条检查原始 Query、完整轨迹、真实工具返回、最终 CSV 和主键，并重新取数核验。目前 case1、case2、case4 已形成 Query + 金标答案；case3、case5 没有强行放行，问题原因已单独记录。</p>
+
+            <table aria-label="Query 与金标构建中的典型问题">
+              <thead>
+                <tr><th>案例</th><th>发现的问题</th><th>本次处理</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>case1</td>
+                  <td>Query 明确要求旧版 27 行业，原 rollout 却产出 31 行；概念全集还出现用已有 390 个代码再次查询来证明“全集为 390”的循环验证。</td>
+                  <td>按 Query 规定的 27 行业重新取数，并以完整概念集合重排涨跌 Top10；补充“停牌不计入涨跌平家数”的口径。</td>
+                </tr>
+                <tr>
+                  <td>case2</td>
+                  <td>停牌是否计入涨跌平、板块成交占比分母以及“全 A 换手率”的市场范围没有写清。</td>
+                  <td>只补充这三处必要口径，金标数据值不变。</td>
+                </tr>
+                <tr>
+                  <td>case4</td>
+                  <td>原 Query 要求截至 2026-08-12 的历史披露状态，但现有接口不能稳定返回该历史快照。</td>
+                  <td>将披露记录锚点调整为 2026-08-31，财务和一致预期仍保持截至 2026-08-12；重新执行并核验 8 张 CSV。</td>
+                </tr>
+              </tbody>
+            </table>
+
+<p class="links"><a href="https://justcoolpig.github.io/ifind-eval-weekly-20260831/benchmark-gold-audit/">打开 5 条 benchmark 候选审计页面</a></p>
+          </div>
+        </details>
+
+        <details class="section" open>
+          <summary>四、当前金标答案的实际获取方式</summary>
+          <div class="section-body">
+            <p>当前金标<strong>不是由 GLM-5.2 的原 rollout 直接生成</strong>。原 rollout 只用于定位问题和追溯证据；真正用于评测的金标，由人工确认日期、范围、字段和主键后，调用真实工具重新取数，对关键数据二次复取或交叉核对，再生成 CSV + 主键并逐表检查文件、行列、单位和公式。</p>
+            <figure>
+              <img src="assets/当前取数与金标验证链路.png" alt="当前人工确认金标答案的实际流程">
+              <figcaption>当前流程：原轨迹用于查错，金标来自人工重新取数和逐表核验。</figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <details class="section" open>
+          <summary>五、当前确认的主要问题</summary>
+          <div class="section-body">
+            <ol>
+              <li><strong>Query 问题：</strong>自然语言任务同时承担数据范围、指标口径、输出文件和评分规则，范围或主键只要欠定义，答案就不唯一。</li>
+              <li><strong>数据源问题：</strong>部分任务要求历史时点数据，但接口只支持当前状态；这种题即使模型执行正确，也无法稳定重建金标。</li>
+              <li><strong>原构建链路问题：</strong>rollout 模型可以产出候选 CSV，但不能自动保证全集完整、口径一致、公式正确和主键有效，当前仍依赖人工逐项确认。</li>
+              <li><strong>扩展性问题：</strong>现有人工流程能够得到少量高质量金标，但成本高，无法直接扩展为大规模训练集和测试集生产管线。</li>
+            </ol>
+<p class="links"><a href="https://justcoolpig.github.io/ifind-eval-weekly-20260831/problems/">查看问题与后续优化说明</a></p>
+          </div>
+        </details>
+
+        <details class="section" open>
+          <summary>六、后续稳定构建 Query 与金标答案对</summary>
+          <div class="section-body">
+            <p>参与讨论后的方向是：先把任务 Pattern 写成结构化命令，使用真实工具重复取数并确认结果稳定，生成 CSV + 主键作为金标；再通过轨迹重放还原取得金标所需的必要步骤，最后根据结构化命令和必要步骤生成自然语言 Query。</p>
+            <p><strong>关键顺序是先得到可复现的金标，再生成 Query。</strong>轨迹重放只负责还原必要步骤，不负责生成真值，也不把原轨迹中的错误恢复和冗余搜索带入新 Query。</p>
+            <figure>
+              <img src="assets/结构化取数与轨迹重放流程.png" alt="结构化取数与轨迹重放构建 Query 和金标答案对">
+              <figcaption>目标链路：结构化取数先确定金标，轨迹重放再辅助生成可执行 Query。</figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <details class="section" open>
+          <summary>七、下周计划</summary>
+          <div class="section-body">
+            <ol>
+              <li>选取可执行的任务 Pattern，先用结构化命令跑通“稳定取数 → CSV + 主键”的最小流程。</li>
+              <li>基于已确认金标开展轨迹重放，提取必要工具步骤，并生成对应自然语言 Query。</li>
+              <li>补齐按主键对齐、逐格比较的确定性 verifier，验证新样本能否直接进入评测集。</li>
+            </ol>
+          </div>
+        </details>
+      </div>
+    </details>
+  </article>
+</body>
+</html>

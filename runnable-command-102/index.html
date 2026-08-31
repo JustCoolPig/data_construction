@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="description"
+      content="102 条改写后 dispatch runnable_command 的 Agent 行为模式聚类、改写对照与原始轨迹浏览器"
+    />
+    <title>Agent Command 行为图谱</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <div class="page-shell">
+      <header class="masthead">
+        <div class="brand-mark" aria-hidden="true">
+          <span>AG</span>
+          <span>102</span>
+        </div>
+        <div class="masthead-copy">
+          <p class="eyebrow">DISPATCH QUERY · AGENT BEHAVIOR</p>
+          <h1>Agent Command<br /><span>行为图谱</span></h1>
+          <p class="lede">
+            标签基于改写后的 dispatch query 重新计算；详情保留改写前后对照。轨迹按原始顺序整理，不做结果评判。
+          </p>
+        </div>
+        <div class="scope-note" aria-label="分析边界">
+          <span class="scope-index">口径 / 03</span>
+          <strong>不按业务主题分类</strong>
+          <p>只分析任务结构；改写前文本用于对照，不参与当前标签计算。</p>
+        </div>
+      </header>
+
+      <nav class="view-switcher" aria-label="页面视图">
+        <button class="view-tab is-active" type="button" data-view-target="overview" aria-selected="true">
+          <span>01</span> 行为总览
+        </button>
+        <button class="view-tab" type="button" data-view-target="explorer" aria-selected="false">
+          <span>02</span> Query 与轨迹
+        </button>
+        <div class="view-meta" id="viewMeta">加载数据中…</div>
+      </nav>
+
+      <main id="main-content">
+        <section class="view-panel" data-view="overview">
+          <div class="metric-strip" id="metricStrip" aria-label="数据概览"></div>
+
+          <div class="overview-grid">
+            <article class="panel panel--distribution">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">MULTI-LABEL DISTRIBUTION</p>
+                  <h2>8 个行为簇</h2>
+                </div>
+                <p>点击任一条形，直接查看该簇里的命令。</p>
+              </div>
+              <div class="mode-chart" id="modeChart"></div>
+            </article>
+
+            <aside class="panel panel--taxonomy">
+              <div class="panel-heading panel-heading--compact">
+                <div>
+                  <p class="panel-kicker">TAXONOMY</p>
+                  <h2>模式定义</h2>
+                </div>
+              </div>
+              <div class="taxonomy-list" id="taxonomyList"></div>
+            </aside>
+          </div>
+
+          <article class="panel command-map-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker">DISPATCH QUERY SPINE</p>
+                <h2>102 条改写 Query · 标签密度图</h2>
+              </div>
+              <p>颜色越深，命中的行为簇越多。点击编号进入轨迹。</p>
+            </div>
+            <div class="command-spine" id="commandSpine" aria-label="102 条命令标签密度"></div>
+            <div class="density-legend" aria-hidden="true">
+              <span>命中少</span>
+              <i data-density="1"></i><i data-density="2"></i><i data-density="3"></i><i data-density="4"></i><i data-density="5"></i>
+              <span>命中多</span>
+            </div>
+          </article>
+
+          <div class="analysis-grid">
+            <article class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">CO-OCCURRENCE</p>
+                  <h2>行为共现矩阵</h2>
+                </div>
+                <p>对角线是单簇覆盖量，其他格是两个行为共同出现的命令数。</p>
+              </div>
+              <div class="matrix-wrap" id="cooccurrenceMatrix"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">ORTHOGONAL LABELS</p>
+                  <h2>结构维度</h2>
+                </div>
+                <p>这些标签与 8 个行为簇正交，用来描述 command 的规模与交付结构。</p>
+              </div>
+              <div class="dimension-grid" id="dimensionGrid"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view-panel" data-view="explorer" hidden>
+          <div class="explorer-toolbar panel">
+            <label class="search-box">
+              <span>搜索 Command</span>
+              <input id="commandSearch" type="search" placeholder="编号、标题、改写前后文本、标签…" autocomplete="off" />
+              <kbd>/</kbd>
+            </label>
+            <label>
+              <span>指标规模</span>
+              <select id="metricFilter"><option value="">全部</option></select>
+            </label>
+            <label>
+              <span>任务面</span>
+              <select id="taskFilter"><option value="">全部</option></select>
+            </label>
+            <label>
+              <span>交付形态</span>
+              <select id="deliveryFilter"><option value="">全部</option></select>
+            </label>
+            <button class="reset-button" id="resetFilters" type="button">清空筛选</button>
+          </div>
+
+          <div class="mode-filter-row" id="modeFilters" aria-label="行为簇筛选"></div>
+
+          <div class="explorer-layout">
+            <aside class="command-index panel" aria-label="命令列表">
+              <div class="index-head">
+                <div>
+                  <p class="panel-kicker">DISPATCH QUERY INDEX</p>
+                  <h2 id="resultCount">0 条结果</h2>
+                </div>
+                <span>多选簇时取交集</span>
+              </div>
+              <div class="command-list" id="commandList"></div>
+              <div class="empty-state" id="emptyState" hidden>
+                <strong>没有匹配项</strong>
+                <p>减少筛选条件或清空搜索词。</p>
+              </div>
+            </aside>
+
+            <article class="detail-panel panel" id="detailPanel" aria-live="polite">
+              <div class="detail-placeholder">
+                <span>↳</span>
+                <h2>选择一条 Query</h2>
+                <p>查看改写后 Query、改写前对照、行为标签，以及按原始顺序整理的完整轨迹。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>AGENT BEHAVIOR DATASET / DISPATCH / 2026-08-27</span>
+        <span>标签来自改写后 runnable_command · trajectory 仅整理</span>
+      </footer>
+    </div>
+
+    <script src="data/index.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>

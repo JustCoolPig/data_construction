@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>当前问题与后续优化方向</title>
+  <style>
+    :root{color-scheme:dark;--bg:#1f2328;--text:#c7d9e8;--head:#d8e8f4;--muted:#94a9ba;--line:#46515b;--link:#4da3ff;--code:#252b31}
+    *{box-sizing:border-box}body{margin:0;padding:28px;background:var(--bg);color:var(--text);font:15px/1.75 "Microsoft YaHei","PingFang SC",sans-serif}
+    main{width:min(1120px,100%);margin:auto}h1,h2,h3{color:var(--head);font-weight:600}h1{font-size:26px;border-bottom:1px solid var(--line);padding-bottom:14px}h2{font-size:20px;margin-top:34px}h3{font-size:17px;margin-top:25px}p{margin:9px 0}li{margin:4px 0}code,pre{background:var(--code)}code{padding:1px 5px;border-radius:3px}pre{padding:14px 16px;overflow:auto;border:1px solid var(--line);white-space:pre-wrap}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}.back{display:inline-block;margin-bottom:8px;color:var(--muted)}strong{color:var(--head)}
+  </style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← 返回周报资源入口</a>
+  <h1>当前问题与后续优化方向</h1>
+
+  <h2>一、当前金标答案是怎么得到的</h2>
+  <p>目前 case1、case2、case4 的金标是人工重新确认出来的：</p>
+  <pre>原始 Query
+→ 确认日期、范围、字段和主键
+→ 阅读原轨迹，定位原产物的问题和可用证据
+→ 人工调用真实工具重新取数
+→ 对关键数据二次复取或交叉核对
+→ 人工生成 CSV + 主键
+→ 逐表检查文件、行列、单位和公式
+→ 确认金标，或修改 Query 后重做</pre>
+  <p>原轨迹的作用是查错和追溯，不是直接提供金标答案。真正的金标来自重新取数与人工核验。</p>
+
+  <h2>二、为什么当前流程不稳定</h2>
+  <p>线上 102 条 <code>runnable_command</code> 的分析确认，这批结构化产物都可以表示为一张或多张二维表，因此统一使用 CSV 作为评测产物是可行的。但“能生成 CSV”不等于“能稳定生成正确金标”。</p>
+  <p>当前根本问题是自然语言 Query 同时承担任务描述、数据范围和口径、输出文件和主键、执行计划与评分依据。模型还要自行选工具、选指标、解释口径、生成 CSV 并自我检查；日期、范围、taxonomy、单位、主键、空值或公式只要欠定义，最终答案就可能不唯一。</p>
+
+  <h2>三、典型问题</h2>
+  <h3>case1：明确要求没有执行到底</h3>
+  <p>Query 要求旧版 27 个行业并排除 4 个行业，但原产物仍保留 31 行，成交额占比也继续使用 31 行合计作为分母。概念板块还出现过 <code>390/395</code> 的循环验证：第二次只查询第一次已有的 390 个代码，不能证明全集只有 390 个。</p>
+
+  <h3>case4：题目要求超出数据源能力</h3>
+  <p>原题要求“截至某日”的历史披露状态，但原接口只能返回当前状态，不能按历史时点稳定重取。后续对 Query 做最小调整，将披露记录锚点与财务数据锚点分开。</p>
+
+  <h3>case5：Query 本身没有唯一答案</h3>
+  <p>一只股票可能有多个龙虎榜上榜原因，股票代码不能单独唯一标识一行；连板统计又没有给出区间起点。主键和时间范围未定义完整时，无法产生唯一金标。</p>
+
+  <h2>四、后续稳定构建方案</h2>
+  <pre>任务 Pattern / 线上意图
+→ 写成结构化命令
+→ 调用真实工具取数
+→ 使用同一命令重复取数，确认结果稳定
+→ 生成 CSV + 主键，确定金标答案
+→ 轨迹重放，还原取得该金标所需的必要步骤
+→ 根据结构化命令和必要步骤生成自然语言 Query
+→ 固化 Query + 金标答案对，进入评测集</pre>
+  <p><strong>关键顺序：先得到可复现的金标，再生成 Query。</strong></p>
+
+  <h2>五、结构化命令至少需要固定什么</h2>
+  <ol>
+    <li>日期或时间区间；</li><li>数据范围和主体集合；</li><li>对应工具、operation 和指标；</li><li>输出 CSV 文件及列；</li><li>单列或联合主键；</li><li>单位、精度和空值规则；</li><li>筛选、排序、聚合和计算公式。</li>
+  </ol>
+
+  <h2>六、轨迹重放的作用</h2>
+  <ul>
+    <li>还原取得已确认金标所需的工具步骤；</li>
+    <li>判断哪些步骤必要，哪些只是原轨迹中的冗余探索；</li>
+    <li>帮助把结构化命令转成模型能够执行的自然语言 Query；</li>
+    <li>避免把原轨迹中的错误、绕行或偶然路径写进 Query。</li>
+  </ul>
+</main>
+</body>
+</html>

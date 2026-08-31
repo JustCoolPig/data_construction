@@ -1,0 +1,44 @@
+{
+  "tested_at": "2026-08-27T19:58:25.680422+00:00",
+  "result": "passed",
+  "browser": "本机Google Chrome（Playwright控制，headless）",
+  "checks": [
+    "总览显示0/5可入库、5个案例及统一审计口径。",
+    "逐一打开5个案例和44张最终CSV；每张表头、数据行和单元格证据抽屉可用。",
+    "逐一核对5条完整轨迹事件数：181、159、268、223、298。",
+    "案例5核对99个工具调用事件、轨迹搜索p00119和单元格独立值。",
+    "全站搜索可返回query、问题、CSV和轨迹结果。",
+    "390x844移动端导航、布局和横向溢出检查通过。",
+    "页面不存在自动诊断、证据强度或置信度等混淆标签。",
+    "浏览器console错误=0，pageerror=0。"
+  ],
+  "screenshots": [
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/qa/qa_overview.png",
+      "bytes": 453038,
+      "sha256": "574714482ffa6a44ef83dbf0e69f6a7e110736cb60f7b5743829f23895939901",
+      "dimensions": [
+        1440,
+        3353
+      ]
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/qa/qa_case5.png",
+      "bytes": 838867,
+      "sha256": "d35e494ea98707ec32a277b4c3c93ba230ebdc1ef1980ce4ba75e1fc5cbb9f86",
+      "dimensions": [
+        1440,
+        8385
+      ]
+    },
+    {
+      "path": "/ifind/user_workspace/xhao/codebase/claude-RL/data/online/tagging/demo/benchmark_gold_audit_20260828/audit_v2/site/qa/qa_mobile.png",
+      "bytes": 621235,
+      "sha256": "7187b4c744f578a15db0e588a54378e30ef6725cf733735ad8939b06e4991201",
+      "dimensions": [
+        390,
+        9833
+      ]
+    }
+  ]
+}
